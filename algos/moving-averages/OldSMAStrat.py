@@ -66,7 +66,7 @@ class OldSMAStrat(QCAlgorithm):
             self.MarketOrder("SPY", -quarterOfSPYHoldings)
         
         # Sell 5% for every 10(ish) % gain or every 15(ish) % drop
-        if (0.10 <= self.spyROCPOne.Current.Value <= 0.105) or (-0.155 <= self.spyROCPOne.Current.Value <= -0.150):
+        if (self.spyROCPOne.Current.Value >= 0.10) or (self.spyROCPOne.Current.Value <= -0.150):
             quarterOfSPYHoldings = int(self.Securities["SPY"].Holdings.Quantity * 0.05)
             self.MarketOrder("SPY", -quarterOfSPYHoldings)
             
