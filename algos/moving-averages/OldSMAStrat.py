@@ -46,14 +46,18 @@ class OldSMAStrat(QCAlgorithm):
         
         # If 50 day is higher than 200 day, then we allocate 100% of our Buying Power to SPY
         if self.spySMAFifty.Current.Value > self.spySMATwoHund.Current.Value:
-            self.SetHoldings("SPY", 1)
+            # self.SetHoldings("SPY", 1)
+            numShares = int((self.Portfolio.Cash) / self.Securities["SPY"].Price)
+            buyOrder = self.MarketOrder("SPY", numShares)
         else:
             # Free up 100% of our buying power (sell all shares)
             self.Liquidate("SPY")
             
         # If 10 day is higher than 50 day, allocate 25% of buying power to SPY    
         if self.spySMATen.Current.Value > self.spySMAFifty.Current.Value:
-            self.SetHoldings("SPY", 0.25)
+            # self.SetHoldings("SPY", 0.25)
+            numShares = int((self.Portfolio.Cash * 0.25) / self.Securities["SPY"].Price)
+            buyOrder = self.MarketOrder("SPY", numShares)
         else:
             # Sell 25% of SPY holdings:
             #   Get num SPY holdings / 25
@@ -61,12 +65,8 @@ class OldSMAStrat(QCAlgorithm):
             quarterOfSPYHoldings = int(self.Securities["SPY"].Holdings.Quantity * 0.25)
             self.MarketOrder("SPY", -quarterOfSPYHoldings)
         
-        # Sell 5% for every 10(ish) % gain
-        if 10.0 <= self.spyROCPOne.Current.Value <= 10.5:
-            quarterOfSPYHoldings = int(self.Securities["SPY"].Holdings.Quantity * 0.05)
-            self.MarketOrder("SPY", -quarterOfSPYHoldings)
-        # Sell 5% for every 15(ish) % drop
-        elif -15.5 <= self.spyROCPOne.Current.Value <= -15.0:
+        # Sell 5% for every 10(ish) % gain or every 15(ish) % drop
+        if (0.10 <= self.spyROCPOne.Current.Value <= 0.105) or (-0.155 <= self.spyROCPOne.Current.Value <= -0.150):
             quarterOfSPYHoldings = int(self.Securities["SPY"].Holdings.Quantity * 0.05)
             self.MarketOrder("SPY", -quarterOfSPYHoldings)
             
