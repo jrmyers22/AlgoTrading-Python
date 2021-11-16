@@ -16,7 +16,7 @@ df.drop(columns=['Open', 'High', 'Low', 'Volume'], inplace=True)
 close_data = df['Close'].values
 close_data = close_data.reshape((-1,1))
 
-split_percent = 0.80
+split_percent = 0.70
 split = int(split_percent*len(close_data))
 
 close_train = close_data[:split]
