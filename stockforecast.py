@@ -73,7 +73,7 @@ trace3 = go.Scatter(
     name = 'Ground Truth'
 )
 layout = go.Layout(
-    title = "Google Stock",
+    title = "Tesla Stock",
     xaxis = {'title' : "Date"},
     yaxis = {'title' : "Close"}
 )
