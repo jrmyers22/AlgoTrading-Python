@@ -72,8 +72,7 @@ class OldSMAStrat(QCAlgorithm):
             if security.Invested:
                 self.Liquidate(security.Symbol)
 
-        # This is where we are going to implement our strategy for both 
-        # Added Securities and Existing Securities
+        # This is where we are going to implement our strategy for both Added Securities and Existing Securities
         # Can accomplish through the use of self.ActiveSecurities (select the assets currently in your universe)
         # Docs: /docs/algorithm-reference/securities-and-portfolio#Securities-and-Portfolio-Active-Securities
         # ---> For now, this just sells existing holdings, and evenly distributes cash across all securities in our universe
